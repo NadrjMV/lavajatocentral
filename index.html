@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lava Jato Central - Cuidado profissional para o seu veículo</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+    <link rel="icon" type="image/svg+xml" href="https://i.postimg.cc/TwkMTZLQ/lvjt.jpg">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* --- CONFIGURAÇÕES GLOBAIS E VARIÁVEIS DE COR --- */
+        :root {
+            --primary-color: #007BFF; /* Azul vibrante */
+            --secondary-color: #0056b3; /* Azul mais escuro para hover */
+            --dark-bg: #1a1a1a; /* Fundo escuro principal */
+            --card-bg: #2c2c2c; /* Fundo dos cards */
+            --text-light: #f4f4f4; /* Texto claro */
+            --text-medium: #a0a0a0; /* Texto secundário */
+            --accent-gold: #FFD700; /* Dourado para detalhes de destaque */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+        
+        /* Efeito de Fade-in ao rolar */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- CABEÇALHO E NAVEGAÇÃO --- */
+        header {
+            background-color: rgba(26, 26, 26, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--card-bg);
+            width: 100%;
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-list li {
+            margin-left: 30px;
+        }
+
+        .nav-list a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 400;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-list a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-list a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-list a:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-left: 30px;
+        }
+        
+        .cta-button:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+        
+        .mobile-menu-icon {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .mobile-menu-icon div {
+            width: 30px;
+            height: 3px;
+            background-color: var(--text-light);
+            margin: 6px 0;
+            transition: 0.4s;
+        }
+
+        /* --- SEÇÃO HERO (PRINCIPAL) --- */
+        #inicio {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://mecanie.com.br/artigos/wp-content/uploads/2023/11/marketing-lava-rapido.jpg'); /* IMAGEM DE EXEMPLO. SUBSTITUA PELA SUA. */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 0;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+        }
+        
+        .hero-content .subtitle {
+            font-size: 1.3rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+        }
+        
+        .hero-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.2s;
+            display: inline-block;
+        }
+
+        .hero-button:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        /* --- SEÇÃO DE SERVIÇOS --- */
+        #servicos {
+            background-color: var(--dark-bg);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #3c3c3c;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 123, 255, 0.1);
+        }
+
+        .service-card .icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        .service-card .price {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+        }
+        
+        .price .currency {
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+        
+        .price .from {
+            font-size: 1rem;
+            font-weight: 300;
+            display: block;
+            color: var(--text-medium);
+        }
+
+        .service-card p {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+
+        /* --- SEÇÃO SOBRE / POR QUE NÓS --- */
+        #sobre {
+            background-color: var(--card-bg);
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+        
+        .about-image {
+            flex: 1;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .about-text p {
+            color: var(--text-medium);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        
+        .features-list {
+            list-style: none;
+        }
+        
+        .features-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .features-list .icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-right: 15px;
+            width: 30px;
+            text-align: center;
+        }
+
+        /* --- SEÇÃO GALERIA --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 15px;
+        }
+        
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-item .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .gallery-item:hover .overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- SEÇÃO DE CONTATO --- */
+        #contato {
+            background-color: var(--card-bg);
+        }
+        
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: flex-start;
+        }
+        
+        .contact-info, .contact-map {
+            background-color: var(--dark-bg);
+            padding: 40px;
+            border-radius: 10px;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .info-item .icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-right: 20px;
+        }
+        
+        .info-item p {
+            font-size: 1rem;
+            color: var(--text-medium);
+            line-height: 1.4;
+        }
+        
+        .info-item p strong {
+            color: var(--text-light);
+            display: block;
+        }
+        
+        .whatsapp-button {
+            display: inline-block;
+            background-color: #25D366;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-top: 20px;
+        }
+        
+        .whatsapp-button i {
+            margin-right: 10px;
+        }
+        
+        .whatsapp-button:hover {
+            background-color: #128C7E;
+            transform: scale(1.05);
+        }
+        
+        .contact-map iframe {
+            width: 100%;
+            height: 450px;
+            border: 0;
+            border-radius: 10px;
+        }
+
+        /* --- RODAPÉ --- */
+        footer {
+            background-color: var(--dark-bg);
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid var(--card-bg);
+        }
+        
+        .social-links a {
+            color: var(--text-medium);
+            font-size: 1.5rem;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .footer p {
+            margin-top: 20px;
+            color: var(--text-medium);
+            font-size: 0.9rem;
+        }
+
+        /* --- BOTÃO FLUTUANTE WHATSAPP --- */
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            text-decoration: none;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            z-index: 999;
+            transition: transform 0.3s ease;
+        }
+        
+        .floating-whatsapp:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h2 { font-size: 2rem; }
+            .hero-content h1 { font-size: 2.5rem; }
+
+            .nav-list {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: var(--card-bg);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.5s ease-in-out;
+            }
+            
+            .nav-list.active {
+                right: 0;
+            }
+            
+            .nav-list li {
+                margin: 20px 0;
+            }
+            
+            .cta-button {
+                display: none; /* Esconde o botão do menu principal em mobile */
+            }
+
+            .mobile-menu-icon {
+                display: block;
+                z-index: 1001; /* Para ficar acima do menu */
+            }
+            
+            .mobile-menu-icon.active .line1 {
+                transform: rotate(-45deg) translate(-7px, 7px);
+            }
+            .mobile-menu-icon.active .line2 {
+                opacity: 0;
+            }
+            .mobile-menu-icon.active .line3 {
+                transform: rotate(45deg) translate(-7px, -7px);
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-bar">
+            <a href="#inicio" class="logo">Lava Jato <span>Central</span></a>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="#inicio">Início</a></li>
+                    <li><a href="#servicos">Serviços</a></li>
+                    <li><a href="#sobre">Sobre Nós</a></li>
+                    <li><a href="#galeria">Galeria</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+            <a href="https://api.whatsapp.com/send?phone=5535999634736&text=Olá!%20Gostaria%20de%20agendar%20um%20horário." target="_blank" class="cta-button">Agendar Horário</a>
+            <div class="mobile-menu-icon">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="inicio">
+            <div class="hero-content fade-in">
+                <h1>🚗💦 Seu carro merece esse cuidado!</h1>
+                <p class="subtitle">No Lava Jato Central, você encontra atendimento profissional, atenção aos detalhes e preços que cabem no seu bolso.</p>
+                <a href="#servicos" class="hero-button">Conheça Nossos Serviços</a>
+            </div>
+        </section>
+
+        <section id="servicos" class="fade-in">
+            <div class="container">
+                <h2>Nossos Serviços</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="icon"><i class="fas fa-car-side"></i></div>
+                        <h3>Lavagem Simples</h3>
+                        <div class="price"><span class="currency">R$</span>39,90</div>
+                        <p>Lavagem externa com shampoo neutro e secagem especial para um brilho rápido e eficiente.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="icon"><i class="fas fa-car"></i></div>
+                        <h3>Lavagem Completa</h3>
+                        <div class="price"><span class="currency">R$</span>59,90</div>
+                        <p>Inclui lavagem externa, aspiração interna detalhada, limpeza de painéis e vidros.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="icon"><i class="fas fa-search-plus"></i></div>
+                        <h3>Lavagem Detalhada</h3>
+                        <div class="price"><span class="currency">R$</span>99,90</div>
+                        <p>Um tratamento premium com limpeza minuciosa de rodas, caixa de rodas, e condicionamento de plásticos.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="icon"><i class="fas fa-spray-can-sparkles"></i></div>
+                        <h3>Enceramento</h3>
+                        <div class="price"><span class="currency">R$</span>19,90</div>
+                        <p>Aplicação de cera de alta qualidade para proteção da pintura e um brilho intenso e duradouro.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="icon"><i class="fas fa-cloud-showers-heavy"></i></div>
+                        <h3>Remoção de Chuva Ácida</h3>
+                        <div class="price"><span class="from">a partir de</span><span class="currency">R$</span>59,90</div>
+                        <p>Processo especializado para remover manchas d'água e contaminações dos vidros e pintura.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sobre" class="fade-in">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-image">
+                        <img src="https://postosrequinte.com.br/wp-content/uploads/2024/06/333.jpg" alt="Equipe do Lava Jato Central">
+                    </div>
+                    <div class="about-text">
+                        <h3>O melhor tratamento para o seu veículo</h3>
+                        <p>Localizado no coração da cidade, dentro da Central Motoka Brasil, o Lava Jato Central nasceu da paixão por carros e do compromisso com a excelência. Nossa missão é simples: devolver ao seu carro aquele brilho de novo, com um serviço que combina tecnologia, produtos de ponta e, o mais importante, muito capricho.</p>
+                        <ul class="features-list">
+                            <li><i class="icon fas fa-check-circle"></i> <strong>Qualidade Superior:</strong> Usamos os melhores produtos para garantir um resultado impecável.</li>
+                            <li><i class="icon fas fa-tachometer-alt"></i> <strong>Agilidade Garantida:</strong> Seu carro pronto no tempo certo, sem comprometer a qualidade.</li>
+                            <li><i class="icon fas fa-star"></i> <strong>Atenção aos Detalhes:</strong> Cuidamos de cada canto do seu veículo como se fosse nosso.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="galeria" class="fade-in">
+            <div class="container">
+                <h2>Nosso Trabalho</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item"><img src="https://www.tecfil.com.br/wp-content/uploads/2022/02/Imagem-1-Carro-preto-com-pintura-brilhosa.jpg" alt="Carro preto brilhando"><div class="overlay">Brilho Intenso</div></div>
+                    <div class="gallery-item"><img src="https://www.box21online.com.br/wp-content/uploads/2021/11/limpeza-de-paineis.jpeg" alt="Interior do carro limpo"><div class="overlay">Interior Impecável</div></div>
+                    <div class="gallery-item"><img src="https://i.ytimg.com/vi/5nWf-eGLo7M/maxresdefault.jpg" alt="Detalhe da roda limpa"><div class="overlay">Cuidado nos Detalhes</div></div>
+                    <div class="gallery-item"><img src="https://pradocar.com.br/Imagens/vitrificacao.jpg" alt="Carro vermelho encerado"><div class="overlay">Proteção e Brilho</div></div>
+                    <div class="gallery-item"><img src="https://mecanie.com.br/artigos/wp-content/uploads/2023/11/Espumadeira-para-lava-rapido.png" alt="Espuma durante a lavagem"><div class="overlay">Processo de Lavagem</div></div>
+                    <div class="gallery-item"><img src="https://revistacarro.com.br/wp-content/uploads/2020/01/toyota-corolla-hibrido-3_1200.jpg" alt="Carro branco limpo"><div class="overlay">Resultado Final</div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contato" class="fade-in">
+            <div class="container">
+                <h2>Venha nos Visitar</h2>
+                <div class="contact-wrapper">
+                    <div class="contact-info">
+                        <h3>Informações de Contato</h3>
+                        <div class="info-item">
+                            <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <p><strong>Endereço</strong>Rua Major Belo Lisboa, 134 <br> (Dentro da Central Motoka Brasil)</p>
+                        </div>
+                        <div class="info-item">
+                            <div class="icon"><i class="fas fa-phone-alt"></i></div>
+                            <p><strong>Telefone / WhatsApp</strong>(35) 99963-4736</p>
+                        </div>
+                        <div class="info-item">
+                            <div class="icon"><i class="far fa-clock"></i></div>
+                            <p><strong>Horário de Funcionamento</strong>Segunda a Sábado, das 8h às 18h</p>
+                        </div>
+                        <a href="https://api.whatsapp.com/send?phone=5535999634736&text=Olá!%20Gostaria%20de%20agendar%20um%20horário%20no%20Lava%20Jato%20Central." target="_blank" class="whatsapp-button">
+                            <i class="fab fa-whatsapp"></i> Agendar pelo WhatsApp
+                        </a>
+                    </div>
+                    <div class="contact-map">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3688.1044963686013!2d-45.45794872500889!3d-22.42509242083289!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cb7caeb3791731%3A0xb8cd6c744a0ac87b!2sR.%20Maj.%20Belo%20Lisboa%2C%20134%20-%20Centro%2C%20Itajub%C3%A1%20-%20MG%2C%2037500-016!5e0!3m2!1spt-BR!2sbr!4v1752502266018!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com/lavajato_central_itajuba" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>&copy; 2025 Lava Jato Central. Todos os direitos reservados.</p>
+                <p class="text-sm mt-2">
+                    Desenvolvido por <a href="https://instagram.com/weblv.dev" target="_blank" rel="noopener noreferrer" class="font-bold text-[#fff]">@WebLv</a>
+                </p>
+        </div>
+    </footer>
+    
+    <a href="https://api.whatsapp.com/send?phone=5535999634736&text=Olá!%20Vim%20pelo%20site%20e%20gostaria%20de%20mais%20informações." 
+       target="_blank" 
+       class="floating-whatsapp"
+       aria-label="Fale conosco pelo WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // --- MENU MOBILE (HAMBURGER) ---
+        const mobileMenuIcon = document.querySelector('.mobile-menu-icon');
+        const navList = document.querySelector('.nav-list');
+
+        mobileMenuIcon.addEventListener('click', () => {
+            navList.classList.toggle('active');
+            mobileMenuIcon.classList.toggle('active');
+        });
+        
+        // Fechar menu ao clicar em um link
+        document.querySelectorAll('.nav-list li a').forEach(link => {
+            link.addEventListener('click', () => {
+                navList.classList.remove('active');
+                mobileMenuIcon.classList.remove('active');
+            });
+        });
+
+        // --- ANIMAÇÃO DE FADE-IN AO ROLAR ---
+        const faders = document.querySelectorAll('.fade-in');
+        
+        const appearOptions = {
+            threshold: 0.2, // A animação começa quando 20% do elemento está visível
+            rootMargin: "0px 0px -50px 0px" // Começa a animação um pouco antes do elemento entrar na tela
+        };
+
+        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('visible');
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+
+    </script>
+</body>
+</html>
